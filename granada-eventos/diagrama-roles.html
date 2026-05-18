@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    width: 960px;
+    height: 720px;
+    background: #fff;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-size: 12px;
+    overflow: hidden;
+  }
+
+  /* ── LAYOUT ── */
+  .slide {
+    width: 960px;
+    height: 720px;
+    padding: 22px 28px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  h1 {
+    font-size: 15px;
+    font-weight: 700;
+    color: #1e293b;
+    border-bottom: 2px solid #cbd5e1;
+    padding-bottom: 7px;
+    letter-spacing: 0.3px;
+  }
+
+  .diagram {
+    display: flex;
+    flex: 1;
+    gap: 14px;
+    align-items: stretch;
+  }
+
+  /* ── COLUMNAS ── */
+  .col {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .col-auth   { width: 220px; flex-shrink: 0; }
+  .col-comun  { flex: 1; }
+  .col-arrow  { width: 28px; flex-shrink: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 8px; }
+  .col-admin  { width: 224px; flex-shrink: 0; }
+
+  /* ── SECCIONES ── */
+  .section {
+    border-radius: 8px;
+    padding: 8px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .section-title {
+    font-size: 10.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 2px;
+  }
+
+  .sec-auth  { background: #f8fafc; border: 1.5px solid #94a3b8; flex: 1; }
+  .sec-comun { background: #fff7ed; border: 1.5px solid #ea580c; flex: 1; }
+  .sec-adm   { background: #fce7f3; border: 1.5px solid #be185d; flex: 1; }
+
+  .sec-auth  .section-title { color: #475569; }
+  .sec-comun .section-title { color: #7c2d12; }
+  .sec-adm   .section-title { color: #831843; }
+
+  /* ── NODOS ── */
+  .node {
+    border-radius: 6px;
+    padding: 6px 10px;
+    font-size: 11.5px;
+    line-height: 1.35;
+    text-align: center;
+  }
+  .node-anon  { background: #e0f2fe; border: 1.5px solid #0284c7; color: #0c4a6e; }
+  .node-admin { background: #dcfce7; border: 1.5px solid #16a34a; color: #14532d; }
+  .node-login { background: #f8fafc; border: 1.5px dashed #94a3b8; color: #334155; }
+  .node-label { font-size: 10px; color: #64748b; margin-top: 1px; }
+
+  .perm-item {
+    background: #fff;
+    border: 1px solid #fed7aa;
+    border-radius: 5px;
+    padding: 4px 8px;
+    font-size: 11px;
+    color: #7c2d12;
+    line-height: 1.3;
+  }
+  .adm-item {
+    background: #fff;
+    border: 1px solid #fbcfe8;
+    border-radius: 5px;
+    padding: 4px 8px;
+    font-size: 11px;
+    color: #831843;
+    line-height: 1.3;
+  }
+  .item-screen {
+    font-size: 9.5px;
+    color: #94a3b8;
+  }
+
+  /* ── FLECHAS AUTH ── */
+  .auth-flow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    flex: 1;
+  }
+  .arrow-label {
+    font-size: 9px;
+    color: #64748b;
+    text-align: center;
+    padding: 1px 0;
+  }
+  .arrow-down  { font-size: 14px; color: #94a3b8; line-height: 1; }
+  .arrow-back  { font-size: 9px; color: #94a3b8; align-self: flex-start; padding-left: 6px; }
+
+  /* ── FLECHAS LATERALES ── */
+  .side-arrow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+  }
+  .side-arrow span {
+    font-size: 9.5px;
+    color: #64748b;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    transform: rotate(180deg);
+  }
+  .arrow-right { font-size: 18px; color: #94a3b8; }
+
+  /* ── TABLA ── */
+  .tabla-wrap { margin-top: 4px; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 10.5px;
+  }
+  th {
+    background: #1e293b;
+    color: #fff;
+    padding: 4px 8px;
+    font-weight: 600;
+    text-align: left;
+  }
+  th:nth-child(2), th:nth-child(3) { text-align: center; width: 100px; }
+  td { padding: 3px 8px; border-bottom: 1px solid #e2e8f0; color: #334155; }
+  td:nth-child(2), td:nth-child(3) { text-align: center; }
+  tr:nth-child(even) td { background: #f8fafc; }
+  td.si  { color: #16a34a; font-weight: 700; }
+  td.no  { color: #dc2626; font-weight: 700; }
+  td.accion-admin { font-weight: 600; color: #1e293b; }
+</style>
+</head>
+<body>
+<div class="slide">
+  <h1>Figura 5: Diagrama de roles y permisos — Granada Eventos</h1>
+
+  <div class="diagram">
+
+    <!-- COLUMNA: AUTENTICACION -->
+    <div class="col col-auth">
+      <div class="section sec-auth" style="justify-content: space-between;">
+        <div class="section-title">Autenticacion</div>
+        <div class="auth-flow">
+          <div class="node node-anon">
+            <div>Usuario Anonimo</div>
+            <div class="node-label">sesion = null</div>
+          </div>
+          <div class="arrow-label">pulsa Login</div>
+          <div class="arrow-down">↓</div>
+          <div class="node node-login" style="width:100%;">
+            <div style="font-weight:600;">LoginScreen</div>
+            <div class="node-label">usuario: admin</div>
+            <div class="node-label">contrasena: granada2025</div>
+          </div>
+          <div style="display:flex; width:100%; justify-content:space-between; align-items:flex-start; gap:4px;">
+            <div style="display:flex; flex-direction:column; align-items:center; flex:1;">
+              <div class="arrow-down">↓</div>
+              <div class="arrow-label">correctas</div>
+            </div>
+            <div style="display:flex; flex-direction:column; align-items:center; flex:1;">
+              <div class="arrow-down" style="color:#ef4444;">↺</div>
+              <div class="arrow-label">incorrectas</div>
+            </div>
+          </div>
+          <div class="node node-admin" style="width:100%;">
+            <div>Administrador</div>
+            <div class="node-label">sesion = 'admin'</div>
+          </div>
+          <div class="arrow-down">↓</div>
+          <div class="arrow-label">logout</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FLECHAS HACIA COMUN -->
+    <div class="col col-arrow">
+      <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; gap:24px;">
+        <div style="text-align:center;">
+          <div style="font-size:9px; color:#64748b; margin-bottom:2px;">Anonimo</div>
+          <div style="font-size:20px; color:#94a3b8;">→</div>
+        </div>
+        <div style="text-align:center;">
+          <div style="font-size:9px; color:#64748b; margin-bottom:2px;">Admin</div>
+          <div style="font-size:20px; color:#94a3b8;">→</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- COLUMNA: ACCIONES COMUNES -->
+    <div class="col col-comun">
+      <div class="section sec-comun" style="flex:1;">
+        <div class="section-title">Acciones disponibles para todos los usuarios</div>
+        <div class="perm-item">Ver listado de eventos proximos <span class="item-screen">(HomeScreen)</span></div>
+        <div class="perm-item">Buscar eventos por texto</div>
+        <div class="perm-item">Filtrar eventos por zona y categoria</div>
+        <div class="perm-item">Ver detalle completo de un evento <span class="item-screen">(DetalleEventoScreen)</span></div>
+        <div class="perm-item">Guardar y quitar favoritos de eventos <span class="item-screen">(FavoritosScreen)</span></div>
+        <div class="perm-item">Ver bares y restaurantes <span class="item-screen">(ComerScreen)</span></div>
+        <div class="perm-item">Guardar y quitar favoritos de bares</div>
+        <div class="perm-item">Ver blog y eventos recientes <span class="item-screen">(BlogScreen)</span></div>
+        <div class="perm-item">Ver ayuda e informacion <span class="item-screen">(InfoScreen)</span></div>
+      </div>
+    </div>
+
+    <!-- FLECHAS HACIA ADMIN -->
+    <div class="col col-arrow">
+      <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center;">
+        <div style="text-align:center;">
+          <div style="font-size:9px; color:#64748b; margin-bottom:2px;">Admin</div>
+          <div style="font-size:20px; color:#94a3b8;">→</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- COLUMNA: ACCIONES ADMIN -->
+    <div class="col col-admin">
+      <div class="section sec-adm">
+        <div class="section-title">Acciones exclusivas del Administrador</div>
+        <div class="adm-item">Crear nuevo evento <span class="item-screen">(CrearEventoScreen)</span></div>
+        <div class="adm-item">Editar evento existente <span class="item-screen">(CrearEventoScreen con parametro)</span></div>
+        <div class="adm-item">Eliminar evento <span class="item-screen">(con confirmacion mediante Alert)</span></div>
+        <div class="adm-item">Cerrar sesion <span class="item-screen">(boton Salir en HomeScreen)</span></div>
+      </div>
+
+      <!-- TABLA -->
+      <div class="tabla-wrap" style="flex:1;">
+        <table>
+          <thead>
+            <tr>
+              <th>Accion</th>
+              <th>Anonimo</th>
+              <th>Admin</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Ver eventos</td><td class="si">Si</td><td class="si">Si</td></tr>
+            <tr><td>Buscar / filtrar</td><td class="si">Si</td><td class="si">Si</td></tr>
+            <tr><td>Ver detalle</td><td class="si">Si</td><td class="si">Si</td></tr>
+            <tr><td>Favoritos eventos</td><td class="si">Si</td><td class="si">Si</td></tr>
+            <tr><td>Favoritos bares</td><td class="si">Si</td><td class="si">Si</td></tr>
+            <tr><td>Ver blog</td><td class="si">Si</td><td class="si">Si</td></tr>
+            <tr><td>Ver bares</td><td class="si">Si</td><td class="si">Si</td></tr>
+            <tr><td class="accion-admin">Crear evento</td><td class="no">No</td><td class="si">Si</td></tr>
+            <tr><td class="accion-admin">Editar evento</td><td class="no">No</td><td class="si">Si</td></tr>
+            <tr><td class="accion-admin">Eliminar evento</td><td class="no">No</td><td class="si">Si</td></tr>
+            <tr><td class="accion-admin">Cerrar sesion</td><td class="no">No</td><td class="si">Si</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>

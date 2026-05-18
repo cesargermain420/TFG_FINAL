@@ -1,0 +1,38 @@
+{
+  "expo": {
+    "name": "granada-eventos",
+    "slug": "granada-eventos",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/granaeo_icon_1024.png",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/granaeo_icon_1024.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/granaeo_icon_1024.png",
+        "backgroundColor": "#ffffff"
+      },
+      "edgeToEdgeEnabled": true,
+      "predictiveBackGestureEnabled": false
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "La aplicación necesita acceso a tu galería para añadir fotos a los eventos."
+        }
+      ]
+    ]
+  }
+}

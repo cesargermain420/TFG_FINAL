@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    width: 960px;
+    height: 720px;
+    background: #fff;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-size: 12px;
+    overflow: hidden;
+  }
+
+  .slide {
+    width: 960px;
+    height: 720px;
+    padding: 22px 28px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  h1 {
+    font-size: 15px;
+    font-weight: 700;
+    color: #1e293b;
+    border-bottom: 2px solid #cbd5e1;
+    padding-bottom: 7px;
+    margin-bottom: 16px;
+    letter-spacing: 0.3px;
+  }
+
+  /* ── NODO RAIZ ── */
+  .root-row {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 0;
+  }
+  .box-app {
+    background: #1e293b;
+    color: #fff;
+    border-radius: 8px;
+    padding: 7px 28px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+
+  /* ── LINEA VERTICAL ── */
+  .vline {
+    display: flex;
+    justify-content: center;
+    height: 18px;
+  }
+  .vline div { width: 2px; background: #94a3b8; height: 100%; }
+
+  /* ── NODO NAVEGADOR ── */
+  .nav-row {
+    display: flex;
+    justify-content: center;
+  }
+  .box-nav {
+    background: #1d4ed8;
+    color: #fff;
+    border-radius: 8px;
+    padding: 8px 24px;
+    font-size: 12px;
+    font-weight: 700;
+    text-align: center;
+  }
+  .box-nav span {
+    display: block;
+    font-size: 10px;
+    font-weight: 400;
+    opacity: 0.85;
+    margin-top: 2px;
+  }
+
+  /* ── LINEAS HACIA TABS ── */
+  .connector {
+    position: relative;
+    height: 28px;
+    margin: 0 0px;
+  }
+  .connector svg {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+
+  /* ── TABS ROW ── */
+  .tabs-row {
+    display: flex;
+    gap: 10px;
+    flex: 1;
+    align-items: flex-start;
+  }
+
+  .tab-col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .tab-header {
+    border-radius: 7px 7px 0 0;
+    padding: 7px 8px 6px;
+    text-align: center;
+    font-size: 11px;
+    font-weight: 700;
+    border: 2px solid transparent;
+  }
+  .tab-body {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    border-radius: 0 0 7px 7px;
+    padding: 6px;
+    flex: 1;
+    border-left: 2px solid;
+    border-right: 2px solid;
+    border-bottom: 2px solid;
+  }
+
+  /* Colores por pestaña */
+  .t1 .tab-header { background: #1d4ed8; color: #fff; border-color: #1d4ed8; }
+  .t1 .tab-body   { border-color: #1d4ed8; background: #eff6ff; }
+
+  .t2 .tab-header { background: #0891b2; color: #fff; border-color: #0891b2; }
+  .t2 .tab-body   { border-color: #0891b2; background: #ecfeff; }
+
+  .t3 .tab-header { background: #be185d; color: #fff; border-color: #be185d; }
+  .t3 .tab-body   { border-color: #be185d; background: #fdf2f8; }
+
+  .t4 .tab-header { background: #ea580c; color: #fff; border-color: #ea580c; }
+  .t4 .tab-body   { border-color: #ea580c; background: #fff7ed; }
+
+  .t5 .tab-header { background: #16a34a; color: #fff; border-color: #16a34a; }
+  .t5 .tab-body   { border-color: #16a34a; background: #f0fdf4; }
+
+  /* ── PANTALLAS ── */
+  .screen {
+    background: #fff;
+    border-radius: 5px;
+    padding: 5px 8px;
+    border: 1px solid #e2e8f0;
+    font-size: 10.5px;
+    font-weight: 600;
+    color: #1e293b;
+  }
+  .screen-desc {
+    font-size: 9.5px;
+    font-weight: 400;
+    color: #64748b;
+    margin-top: 1px;
+  }
+  .screen.admin {
+    border-color: #fca5a5;
+    background: #fff5f5;
+  }
+  .screen.admin .screen-desc { color: #ef4444; }
+
+  .stack-label {
+    font-size: 9px;
+    color: #94a3b8;
+    text-align: center;
+    font-style: italic;
+    margin-bottom: 2px;
+  }
+
+  /* ── LEYENDA ── */
+  .legend {
+    display: flex;
+    gap: 18px;
+    align-items: center;
+    margin-top: 10px;
+    padding-top: 8px;
+    border-top: 1px solid #e2e8f0;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 10px;
+    color: #475569;
+  }
+  .legend-box {
+    width: 14px;
+    height: 14px;
+    border-radius: 3px;
+    flex-shrink: 0;
+  }
+</style>
+</head>
+<body>
+<div class="slide">
+  <h1>Figura 6: Mapa de navegacion de la aplicacion</h1>
+
+  <!-- APP -->
+  <div class="root-row">
+    <div class="box-app">App</div>
+  </div>
+
+  <div class="vline"><div></div></div>
+
+  <!-- NAVEGADOR -->
+  <div class="nav-row">
+    <div class="box-nav">
+      AppNavigator
+      <span>Bottom Tab Navigator — 5 pestanas</span>
+    </div>
+  </div>
+
+  <!-- CONECTOR SVG -->
+  <div class="connector">
+    <svg viewBox="0 0 904 28" preserveAspectRatio="none">
+      <!-- Linea horizontal -->
+      <line x1="90" y1="14" x2="814" y2="14" stroke="#94a3b8" stroke-width="2"/>
+      <!-- Lineas a cada tab: posiciones centro de cada columna (5 cols de ~171px + gap 10) -->
+      <!-- col centers aprox: 85, 271, 452, 633, 819 en espacio 904 -->
+      <line x1="90"  y1="0"  x2="90"  y2="14" stroke="#94a3b8" stroke-width="2"/>
+      <line x1="271" y1="0"  x2="271" y2="14" stroke="#94a3b8" stroke-width="2"/>
+      <line x1="452" y1="0"  x2="452" y2="14" stroke="#94a3b8" stroke-width="2"/>
+      <line x1="633" y1="0"  x2="633" y2="14" stroke="#94a3b8" stroke-width="2"/>
+      <line x1="814" y1="0"  x2="814" y2="14" stroke="#94a3b8" stroke-width="2"/>
+      <!-- Flechas hacia abajo -->
+      <polygon points="90,28 85,18 95,18"  fill="#94a3b8"/>
+      <polygon points="271,28 266,18 276,18" fill="#94a3b8"/>
+      <polygon points="452,28 447,18 457,18" fill="#94a3b8"/>
+      <polygon points="633,28 628,18 638,18" fill="#94a3b8"/>
+      <polygon points="814,28 809,18 819,18" fill="#94a3b8"/>
+    </svg>
+  </div>
+
+  <!-- PESTANAS -->
+  <div class="tabs-row">
+
+    <!-- INICIO -->
+    <div class="tab-col t1">
+      <div class="tab-header">Pestana 1 — Inicio</div>
+      <div class="tab-body">
+        <div class="stack-label">Stack Navigator</div>
+        <div class="screen">
+          HomeScreen
+          <div class="screen-desc">Pantalla principal con lista de eventos</div>
+        </div>
+        <div class="screen">
+          DetalleEventoScreen
+          <div class="screen-desc">Detalle completo de un evento</div>
+        </div>
+        <div class="screen admin">
+          CrearEventoScreen
+          <div class="screen-desc">Crear / Editar evento (solo admin)</div>
+        </div>
+        <div class="screen admin">
+          LoginScreen
+          <div class="screen-desc">Autenticacion de administrador</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BLOG -->
+    <div class="tab-col t2">
+      <div class="tab-header">Pestana 2 — Blog</div>
+      <div class="tab-body">
+        <div class="stack-label">Stack Navigator</div>
+        <div class="screen">
+          BlogScreen
+          <div class="screen-desc">Blog de barrios y eventos pasados</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FAVORITOS -->
+    <div class="tab-col t3">
+      <div class="tab-header">Pestana 3 — Favoritos</div>
+      <div class="tab-body">
+        <div class="stack-label">Stack Navigator</div>
+        <div class="screen">
+          FavoritosScreen
+          <div class="screen-desc">Lista de eventos y bares favoritos</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- COMER -->
+    <div class="tab-col t4">
+      <div class="tab-header">Pestana 4 — Comer</div>
+      <div class="tab-body">
+        <div class="stack-label">Stack Navigator</div>
+        <div class="screen">
+          ComerScreen
+          <div class="screen-desc">Guia de bares por zona</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- INFO -->
+    <div class="tab-col t5">
+      <div class="tab-header">Pestana 5 — Info</div>
+      <div class="tab-body">
+        <div class="stack-label">Stack Navigator</div>
+        <div class="screen">
+          InfoScreen
+          <div class="screen-desc">Guia practica de la ciudad</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- LEYENDA -->
+  <div class="legend">
+    <div class="legend-item">
+      <div class="legend-box" style="background:#eff6ff; border:1.5px solid #1d4ed8;"></div>
+      Pantalla accesible para todos los usuarios
+    </div>
+    <div class="legend-item">
+      <div class="legend-box" style="background:#fff5f5; border:1.5px solid #fca5a5;"></div>
+      Pantalla restringida (solo administrador)
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
